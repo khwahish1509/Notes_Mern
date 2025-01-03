@@ -1,13 +1,15 @@
 /* eslint-disable no-unused-vars */
 import React, {useState} from 'react'
+import PropTypes from 'prop-types'
 import TagInput from '../../components/input/TagInput'
 import { MdClose } from 'react-icons/md'
 
-const AddEditNotes = ({onClose}) => {
+const AddEditNotes = ({noteData, type, onClose}) => {
 
     const [title, setTitle] = useState("")
     const [content, setContent] = useState("")
     const [tags, setTags] = useState([])
+    const [error, setError] = useState(null);
 
   return (
     <div className='relative'>
@@ -48,6 +50,11 @@ const AddEditNotes = ({onClose}) => {
         </button>
     </div>
   )
+}
+AddEditNotes.propTypes = {
+    noteData: PropTypes.object,
+    type: PropTypes.string,
+    onClose: PropTypes.func.isRequired,
 }
 
 export default AddEditNotes
