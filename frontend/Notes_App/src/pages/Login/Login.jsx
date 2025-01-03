@@ -26,7 +26,7 @@ const Login = () => {
             return;
         }
 
-        setError("")
+        setError(null);
 
         // Call the login API here
     };

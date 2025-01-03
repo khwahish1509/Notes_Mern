@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import Passwordinput from '../../components/input/Passwordinput'
 import { Link } from 'react-router-dom'
+import { validateEmail } from '../../utils/helper'
 
 const SignUp = () => {
 
@@ -14,6 +15,25 @@ const SignUp = () => {
   const handleSignUp = async (e) => {
     e.preventDefault(); // Prevents the default action of the form submission
     console.log("Sign Up");
+
+    if (!name) {
+      setError("Name is required");
+      return;
+  }
+
+    if (!validateEmail(email)) {
+        setError("Invalid email address");
+        return;
+    }
+    
+    if (!password) {
+        setError("Password is required");
+        return;
+    }
+
+    setError(null);
+
+    // Call the signup API here
   }
   return (
     <>
