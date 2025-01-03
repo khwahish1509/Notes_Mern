@@ -2,6 +2,8 @@
 import React from "react";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { IoMdClose } from "react-icons/io";
+import PropTypes from 'prop-types'; // Import PropTypes
+
 
 const SearchBar = ({ value, onChange, handleSearch, onClearSearch }) => {
     return(
@@ -28,4 +30,13 @@ const SearchBar = ({ value, onChange, handleSearch, onClearSearch }) => {
         </div>
     );
 };
+
+// PropTypes validation
+SearchBar.propTypes = {
+    value: PropTypes.string.isRequired, // Assuming `value` is a string
+    onChange: PropTypes.func.isRequired, // `onChange` should be a function
+    handleSearch: PropTypes.func.isRequired, // `onChange` should be a function
+    onClearSearch: PropTypes.func.isRequired, // `onChange` should be a function
+};
 export default SearchBar
+
