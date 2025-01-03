@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa6'
+import PropTypes from 'prop-types'; // Import PropTypes
+
 
 const Passwordinput = ({value, onChange, placeholder}) => {
 
@@ -35,7 +37,14 @@ const Passwordinput = ({value, onChange, placeholder}) => {
         )}
 
     </div>
-  )
-}
+  );
+};
+
+// PropTypes validation
+Passwordinput.propTypes = {
+    value: PropTypes.string.isRequired, // Assuming `value` is a string
+    onChange: PropTypes.func.isRequired, // `onChange` should be a function
+    placeholder: PropTypes.string, // `placeholder` is an optional string
+};
 
 export default Passwordinput
