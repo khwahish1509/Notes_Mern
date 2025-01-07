@@ -7,6 +7,7 @@ import AddEditNotes from './AddEditNotes'
 import Modal from 'react-modal'
 import { useNavigate } from 'react-router-dom'
 import axiosInstance from '../../utils/axiosInstance'
+import moment from 'moment'
 
 
 const Home = () => {
@@ -18,6 +19,7 @@ const Home = () => {
         data: {}
     })
 
+    const [allNotes, setAllNotes] = useState([]);
     const [userInfo, setUserInfo] = useState(null);
     const navigate = useNavigate();
 
@@ -36,7 +38,21 @@ const Home = () => {
     }
   };
 
+    // Get all notes
+    const getAllNotes = async () => {
+        try {
+          const response = await axiosInstance.get("/get-all-notes");
+    
+          if (response.data && response.data.notes) {
+            setAllNotes(response.data.notes);
+          }
+        } catch (error) {
+          console.log("An unexpected error occurred. Please try again.");
+        }
+      };
+
     useEffect(() => {
+    getAllNotes();
       getUserInfo();
       return () => {};
     }, []);
@@ -49,16 +65,21 @@ const Home = () => {
         <Navbar userInfo={userInfo} />
         <div className='container mx-auto px-5'>
             <div className='grid grid-cols-3 gap-4 mt-8' >
+            {allNotes.map((item) => {
+              return (
                 <NoteCard
-                    title="Meeting on 7th April"
-                    date="3rd Apr 2024"
-                    content="Meeting on 7th April Meeting on 7th April"
-                    tags="#Meeting"
-                    isPinned={true}
-                    onEdit={()=>{}}
-                    onDelete={()=>{}}
-                    onPinNote={()=>{}}
-                />                
+                  key={item._id}
+                  title={item.title}
+                  content={item.content}
+                  date={moment(item.createdOn).format('MMMM Do, YYYY')}
+                  tags={item.tags}
+                  isPinned={item.isPinned}
+                  onEdit={() => {}}
+                  onDelete={() => {}}
+                  onPinNote={() => {}}
+                />
+              );
+            })}               
             </div>
         </div>
 
