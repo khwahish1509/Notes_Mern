@@ -1,8 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate} from 'react-router-dom'
 import Passwordinput from '../../components/input/Passwordinput'
+import axiosInstance from '../../utils/axiosinstance'
 import { validateEmail } from '../../utils/helper'
 
 const Login = () => {
@@ -10,6 +11,7 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     // Function to handle the login form submission
     const handleLogin = async (e) => {
@@ -29,6 +31,26 @@ const Login = () => {
         setError(null);
 
         // Call the login API here
+        try {
+            const response = await axiosInstance.post("/login",{
+                email: email,
+                password: password,
+            });
+
+            if(response.data && response.data.accessToken) {
+                
+                localStorage.setItem("token", response.data.accessToken);
+                navigate("/dashboard");
+            }
+        } catch (error) {
+            if(error.response && error.response.data && error.response.data.message) {
+                setError(error.response.data.message);
+            } else {
+                setError("An error occurred while logging in");
+    
+        }
+
+        }
     };
 
   return (

@@ -9,23 +9,22 @@
 //  reports it right away. This way, your app can send requests 
 //  efficiently, securely, and without repeating setup every time.
 
-/* eslint-disable no-unused-vars */
 import axios from 'axios';
-import { BASE_URL } from './constants';
+import { BASE_URL } from './constants'
 
 const axiosInstance = axios.create({
     baseURL: BASE_URL,
     timeout: 10000,
     headers:{
         "Content-Type": "application/json",
-    }
+    },
 });
 
 axiosInstance.interceptors.request.use(
     (config) => {
-        const accessToken = localStorage.getItem('token');
+        const accessToken = localStorage.getItem("token");
         if (accessToken) {
-            config.headers['Authorization'] = `Bearer ${accessToken}`;
+            config.headers.Authorization= `Bearer ${accessToken}`;
         }
         return config;
     },

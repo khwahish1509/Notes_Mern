@@ -133,7 +133,7 @@ app.post('/login', async (req, res) => {
 
 app.get("/get-user", authenticateToken, async (req, res) => {
     const { user } = req.user;
-    const isUser= await User.findById({_id:user._id});    
+    const isUser= await User.findOne({_id :user._id});    
     if (!isUser) {
         return res.sendStatus(401);
     }
