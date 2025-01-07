@@ -131,6 +131,23 @@ app.post('/login', async (req, res) => {
     }
 });
 
+app.get("/get-user", authenticateToken, async (req, res) => {
+    const { user } = req.user;
+    const isUser= await User.findById({_id:user._id});    
+    if (!isUser) {
+        return res.sendStatus(401);
+    }
+    return res.json({ 
+        user: {
+            fulllName: isUser.fullName,
+            email: isUser.email,
+            _id: isUser._id,
+            createdOn: isUser.createdOn,
+        },
+        message: 'User fetched successfully',
+    })
+});
+
 app.post('/add-note', authenticateToken, async (req, res)=>{
     const { title, content, tags } = req.body;
     const { user } = req.user;
