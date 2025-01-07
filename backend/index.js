@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
 
 // Create a new user account
 app.post('/create-account', async (req, res) => {
-
+    // Validate the request body
     const { fullName, email, password } = req.body;
 
     if (!fullName) {
