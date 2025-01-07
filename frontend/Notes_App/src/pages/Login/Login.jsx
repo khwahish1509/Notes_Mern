@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import { Link, useNavigate} from 'react-router-dom'
 import Passwordinput from '../../components/input/Passwordinput'
-import axiosInstance from '../../utils/axiosinstance'
+import axiosInstance from '../../utils/axiosInstance'
 import { validateEmail } from '../../utils/helper'
 
 const Login = () => {
@@ -32,26 +32,26 @@ const Login = () => {
 
         // Call the login API here
         try {
-            const response = await axiosInstance.post("/login",{
-                email: email,
-                password: password,
+            const response = await axiosInstance.post("/login", {
+              email: email,
+              password: password,
             });
-
-            if(response.data && response.data.accessToken) {
-                
-                localStorage.setItem("token", response.data.accessToken);
-                navigate("/dashboard");
+            
+            // Handle successful login response 
+            if(response.data && response.data.accessToken){
+              localStorage.setItem("token", response.data.accessToken)
+              navigate('/dashboard')
             }
-        } catch (error) {
-            if(error.response && error.response.data && error.response.data.message) {
-                setError(error.response.data.message);
+      
+          } catch (error) {
+            // Handle login error
+            if (error.response && error.response.data && error.response.data.message) {
+              setError(error.response.data.message);
             } else {
-                setError("An error occurred while logging in");
-    
-        }
-
-        }
-    };
+              setError("An unexpected error occurred. Please try again.");
+            }
+          }
+        };
 
   return (
     <>

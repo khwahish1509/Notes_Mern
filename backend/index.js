@@ -2,7 +2,7 @@ require('dotenv').config();
 const config = require('./config.json');
 const mongoose = require('mongoose');
 
-mongoose.connect(config.connectionString)
+mongoose.connect(config.connectionString);
 
 const User = require('./models/user.model');
 const Note = require('./models/note.model')
@@ -110,8 +110,8 @@ app.post('/login', async (req, res) => {
         // Generate an access token for the user as the user is found
         // we generate an access token as it is required for the user to access protected routes
         const user ={user: userInfo};
-        const accessToken = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET,{
-            expiresIn: '300000m'
+        const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET,{
+            expiresIn: '36000'
         });
         // Respond with the user details and access token
         return res.json({

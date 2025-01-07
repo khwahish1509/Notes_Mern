@@ -6,7 +6,7 @@ import { MdAdd } from 'react-icons/md'
 import AddEditNotes from './AddEditNotes'
 import Modal from 'react-modal'
 import { useNavigate } from 'react-router-dom'
-import axiosInstance from '../../utils/axiosinstance'
+import axiosInstance from '../../utils/axiosInstance'
 
 
 const Home = () => {
@@ -18,33 +18,34 @@ const Home = () => {
         data: {}
     })
 
-    // const [userInfo, setUserInfo] = useState(null);
-    // const navigate = useNavigate();
+    const [userInfo, setUserInfo] = useState(null);
+    const navigate = useNavigate();
 
-    // const getUserInfo = async () => {
-    //     try {
-    //         const response = await axiosInstance.get("/get-user");
-    //         if (response.data && response.data.user) {
-    //             setUserInfo(response.data.user);
-    //         }
-    //     } catch (error) {
-    //         if(error.response.status === 401){
-    //             localStorage.clear();
-    //             navigate("/login");
-    //         }
-    //     }
-    // };
+//   Get User Info
+  const getUserInfo = async () => {
+    try {
+      const response = await axiosInstance.get("/get-user");
+      if (response.data && response.data.user) {
+        setUserInfo(response.data.user);
+      }
+    } catch (error) {
+      if (error.response.status === 401) {
+        localStorage.clear();
+        navigate("/login");
+      }
+    }
+  };
 
-    // useEffect(() => {
-    //   getUserInfo();
-    //   return () => {};
-    // }, []);
+    useEffect(() => {
+      getUserInfo();
+      return () => {};
+    }, []);
 
     
 
   return (
     <>
-
+        {/* userInfo={userInfo} */}
         <Navbar />
         <div className='container mx-auto px-5'>
             <div className='grid grid-cols-3 gap-4 mt-8' >

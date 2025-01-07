@@ -9,29 +9,28 @@
 //  reports it right away. This way, your app can send requests 
 //  efficiently, securely, and without repeating setup every time.
 
-import axios from 'axios';
-import { BASE_URL } from './constants'
+import axios from "axios";
+import { BASE_URL } from "./constants";
 
 const axiosInstance = axios.create({
-    baseURL: BASE_URL,
-    timeout: 10000,
-    headers:{
-        "Content-Type": "application/json",
-    },
+  baseURL: BASE_URL,
+  timeout: 10000,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 axiosInstance.interceptors.request.use(
-    (config) => {
-        const accessToken = localStorage.getItem("token");
-        if (accessToken) {
-            config.headers.Authorization= `Bearer ${accessToken}`;
-        }
-        return config;
-    },
-    (error) =>{
-       return Promise.reject(error)
-    }   
+  (config) => {
+    const accessToken = localStorage.getItem("token");
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
 );
-
 
 export default axiosInstance;
