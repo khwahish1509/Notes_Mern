@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router-dom'
 import axiosInstance from '../../utils/axiosInstance'
 import Toast from '../../components/ToastMessage/Toast'
 import EmptyCard from '../../components/EmptyCard/EmptyCard'
+import AddNotesImg from "../../assets/images/add-notes.svg";
+import NoDataImg from "../../assets/images/no-data.svg";
 
 
 const Home = () => {
@@ -127,13 +129,13 @@ const Home = () => {
           </div>
         ) : (
           <EmptyCard
-          //   imgSrc={isSearch ? NoDataImg : AddNotesImg}
-          //   message={
-          //     isSearch
-          //       ? `Oops! No notes found matching your search.`
-          //       : `Start creating your first note! Click the 'Add' button to jot down your
-          // thoughts, ideas, and reminders. Let's get started!`
-          //   }
+            imgSrc={isSearch ? NoDataImg : AddNotesImg}
+            message={
+              isSearch
+                ? `Oops! No notes found matching your search.`
+                : `Start creating your first note! Click the 'Add' button to jot down your
+          thoughts, ideas, and reminders. Let's get started!`
+            }
           />
         )}
       </div>
