@@ -8,6 +8,7 @@ import Modal from 'react-modal'
 import { useNavigate } from 'react-router-dom'
 import axiosInstance from '../../utils/axiosInstance'
 import Toast from '../../components/ToastMessage/Toast'
+import EmptyCard from '../../components/EmptyCard/EmptyCard'
 
 
 const Home = () => {
@@ -105,25 +106,37 @@ const Home = () => {
     <>
         
         <Navbar userInfo={userInfo} />
-        <div className='container mx-auto px-5'>
-            <div className='grid grid-cols-3 gap-4 mt-8' >
-            {allNotes.map((item) => {
-              return (
-                <NoteCard
-                  key={item._id}
-                  title={item.title}
-                  content={item.content}
-                  date={item.createdOn}
-                  tags={item.tags}
-                  isPinned={item.isPinned}
-                  onEdit={() => {handleEdit(item)  }}
-                  onDelete={() => {deleteNote(item)}}
-                  onPinNote={() => {}}
-                />
-              );
-            })}               
-            </div>
-        </div>
+          <div className='container mx-auto px-5'>
+            {allNotes.length > 0 ? (
+              <div className="grid grid-cols-3 gap-4 mt-8">
+                {allNotes.map((item) => {
+                  return (
+                    <NoteCard
+                      key={item._id}
+                      title={item.title}
+                      content={item.content}
+                      date={item.createdOn}
+                      tags={item.tags}
+                      isPinned={item.isPinned}
+                      onEdit={() => handleEdit(item)}
+                      onDelete={() => deleteNote(item)}
+                      // onPinNote={() => }
+                    />
+                  );
+                })}
+          </div>
+        ) : (
+          <EmptyCard
+          //   imgSrc={isSearch ? NoDataImg : AddNotesImg}
+          //   message={
+          //     isSearch
+          //       ? `Oops! No notes found matching your search.`
+          //       : `Start creating your first note! Click the 'Add' button to jot down your
+          // thoughts, ideas, and reminders. Let's get started!`
+          //   }
+          />
+        )}
+      </div>
 
         <button className='w-14 h-14 flex items-center justify-center rounded-2xl bg-black hover:bg-gray-600 absolute right-10 bottom-10' 
         onClick={()=>{
