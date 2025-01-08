@@ -18,6 +18,12 @@ const Home = () => {
         data: null,
     });
 
+    const [showToastMsg, setShowToastMsg] = useState({
+      isShown: false,
+      message: "",
+      type: "add",
+    })
+
     const [allNotes, setAllNotes] = useState([]);
     const [userInfo, setUserInfo] = useState(null);
     const navigate = useNavigate();
