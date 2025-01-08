@@ -2,9 +2,10 @@
 import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import TagInput from '../../components/input/TagInput'
+import axiosInstance from '../../utils/axiosInstance'
 import { MdClose } from 'react-icons/md'
 
-const AddEditNotes = ({noteData, type, onClose}) => {
+const AddEditNotes = ({noteData, type, getAllNotes, onClose}) => {
 
     const [title, setTitle] = useState("")
     const [content, setContent] = useState("")
@@ -12,13 +13,31 @@ const AddEditNotes = ({noteData, type, onClose}) => {
     const [error, setError] = useState(null);
 
     // Function to add a new note
-    const addNote = async () => {
-    // const newNote = {
-    //     title,
-    //     content,
-    //     tags,
-    //     isPinned: false,
-    }
+    const addNewNote = async () => {
+        try {
+          const response = await axiosInstance.post("/add-note", {
+            title,
+            content,
+            tags,
+          });
+    
+          if (response.data && response.data.note) {
+            getAllNotes();
+            onClose();
+          }
+        } catch (error) {
+          if (
+            error.response &&
+            error.response.data &&
+            error.response.data.message
+          ) {
+            setError(error.response.data.message);
+          } else {
+            setError("An unexpected error occurred. Please try again.");
+          }
+        }
+      };
+    
 
     // Function to edit a note
     const editNote = async () => {
@@ -45,7 +64,7 @@ const AddEditNotes = ({noteData, type, onClose}) => {
         if (!type === "edit") {
             editNote()
         }else{
-            addNote()
+            addNewNote()
         }
 
     };
@@ -95,6 +114,7 @@ const AddEditNotes = ({noteData, type, onClose}) => {
 AddEditNotes.propTypes = {
     noteData: PropTypes.object,
     type: PropTypes.string,
+    getAllNotes: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
 }
 

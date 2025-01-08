@@ -148,47 +148,45 @@ app.get("/get-user", authenticateToken, async (req, res) => {
     })
 });
 
-app.post('/add-note', authenticateToken, async (req, res)=>{
+// Add Note
+app.post("/add-note", authenticateToken, async (req, res) => {
     const { title, content, tags } = req.body;
     const { user } = req.user;
-
-    if (!user || !user._id) {
-        return res.status(400).json({ error: true, message: 'User ID is missing or invalid' });
-    }
-
+  
     if (!title) {
-        return res.status(400).json({ message: 'Title is required' });
+      return res.status(400).json({ error: true, message: "Title is required" });
     }
-
+  
     if (!content) {
-        return res.status(400).json({ message: 'Content is required' });
+      return res
+        .status(400)
+        .json({ error: true, message: "Content is required" });
     }
-
+  
     try {
-        const note = new Note({
-            title,
-            content,
-            tags,
-            userId: user._id,
-        });
-
-        await note.save();
-        return res.json({ 
-            error: false,
-            note,
-            message: 'Note added successfully' 
-        });
+      const note = new Note({
+        title,
+        content,
+        tags: tags || [],
+        userId: user._id,
+      });
+  
+      await note.save();
+  
+      return res.json({
+        error: false,
+        note,
+        message: "Note added successfully",
+      });
     } catch (error) {
-        console.error('Error adding note:', error.message); // Log the error message
-        console.error(error.stack); // Log the stack trace for more details
-
-        return res.status(500).json({
-            error: true,
-            message: 'Internal Server Error',
-            details: error.message, // Include the error message in the response
-        });
+      return res.status(500).json({
+        error: true,
+        message: "Internal Server Error",
+      });
     }
-});
+  });
+
+
 
 app.put('/edit-note/:noteId', authenticateToken, async (req, res)=>{
     const noteId = req.params.noteId; // Note ID
