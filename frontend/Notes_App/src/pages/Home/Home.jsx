@@ -15,12 +15,16 @@ const Home = () => {
     const [openAddEditModal, setOpenAddEditModal] = useState({
         isShown: false,
         type: "add",
-        data: {}
-    })
+        data: null,
+    });
 
     const [allNotes, setAllNotes] = useState([]);
     const [userInfo, setUserInfo] = useState(null);
     const navigate = useNavigate();
+
+    const handleEdit = (noteDetails) => {
+      setOpenAddEditModal({ isShown: true, data: noteDetails, type: "edit" });
+    };
 
 //   Get User Info
   const getUserInfo = async () => {
@@ -73,7 +77,7 @@ const Home = () => {
                   date={item.createdOn}
                   tags={item.tags}
                   isPinned={item.isPinned}
-                  onEdit={() => {}}
+                  onEdit={() => {handleEdit(item)  }}
                   onDelete={() => {}}
                   onPinNote={() => {}}
                 />
@@ -94,7 +98,9 @@ const Home = () => {
         {/* Add/Edit Modal */}
         <Modal
             isOpen={openAddEditModal.isShown}
-            onRequestClose={()=>setOpenAddEditModal({isShown: false, type: "add", data: {}})}
+            // onRequestClose={()=>setOpenAddEditModal({isShown: false, type: "add", data: {}})}
+            onRequestClose={() => {}}
+
             style={{
                 overlay: {
                     backgroundColor: 'rgba(0, 0, 0, 0.5)'
