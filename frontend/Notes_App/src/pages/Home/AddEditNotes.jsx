@@ -9,6 +9,7 @@ const AddEditNotes = ({
   type,
   onClose,
   getAllNotes,
+  showToastMessage,
 }) => {
   const [title, setTitle] = useState(noteData?.title || "");
   const [content, setContent] = useState(noteData?.content || "");
@@ -25,6 +26,7 @@ const AddEditNotes = ({
       });
 
       if (response.data && response.data.note) {
+        showToastMessage("Note added successfully !");
         getAllNotes();
         onClose();
       }
@@ -52,6 +54,7 @@ const AddEditNotes = ({
       });
 
       if (response.data && response.data.note) {
+        showToastMessage("Note Updated successfully !");
         getAllNotes();
         onClose();
       }
@@ -143,6 +146,8 @@ AddEditNotes.propTypes = {
     type: PropTypes.string,
     getAllNotes: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
+    showToastMessage: PropTypes.func.isRequired,
+
 }
 
 export default AddEditNotes
