@@ -33,3 +33,7 @@
         @apply text-xs text-slate-400;
     }
 }
+
+#scroll::-webkit-scrollbar{
+    display: none;
+}

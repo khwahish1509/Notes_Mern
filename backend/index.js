@@ -111,7 +111,7 @@ app.post('/login', async (req, res) => {
         // we generate an access token as it is required for the user to access protected routes
         const user ={user: userInfo};
         const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET,{
-            expiresIn: '36000'
+            expiresIn: '36000m'
         });
         // Respond with the user details and access token
         return res.json({
