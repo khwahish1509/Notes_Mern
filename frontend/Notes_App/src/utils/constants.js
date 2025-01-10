@@ -1,3 +1,1 @@
-export const BASE_URL = 'notes-mern-bpbg7w47t-khwahishs-projects.vercel.app';
-
-
+export const BASE_URL = 'http://localhost:8000';
